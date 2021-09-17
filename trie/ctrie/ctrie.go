@@ -31,7 +31,7 @@ import (
 	"sync/atomic"
 	"unsafe"
 
-	"github.com/Workiva/go-datastructures/list"
+	"github.com/anadav/go-datastructures/list"
 )
 
 const (

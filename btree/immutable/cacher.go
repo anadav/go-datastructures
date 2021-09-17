@@ -20,7 +20,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Workiva/go-datastructures/futures"
+	"github.com/anadav/go-datastructures/futures"
 )
 
 // cacher provides a convenient construct for retrieving,

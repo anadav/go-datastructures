@@ -33,9 +33,9 @@ Delete: O(log N1 + log N2 + ...log Nn) = O(log N1*N2*...Nn)
 package skiplist
 
 import (
-	"github.com/Workiva/go-datastructures/common"
-	"github.com/Workiva/go-datastructures/rangetree"
-	"github.com/Workiva/go-datastructures/slice/skip"
+	"github.com/anadav/go-datastructures/common"
+	"github.com/anadav/go-datastructures/rangetree"
+	"github.com/anadav/go-datastructures/slice/skip"
 )
 
 // keyed is required as in the rangetree code we often want to compare

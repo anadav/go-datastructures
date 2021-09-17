@@ -36,8 +36,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/Workiva/go-datastructures/queue"
-	"github.com/Workiva/go-datastructures/rtree"
+	"github.com/anadav/go-datastructures/queue"
+	"github.com/anadav/go-datastructures/rtree"
 )
 
 type operation int

@@ -20,7 +20,7 @@ import (
 	"log"
 	"sort"
 
-	"github.com/Workiva/go-datastructures/common"
+	"github.com/anadav/go-datastructures/common"
 )
 
 func getParent(parent *node, key common.Comparator) *node {
