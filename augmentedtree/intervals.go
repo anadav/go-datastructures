@@ -20,7 +20,8 @@ import "sync"
 
 var intervalsPool = sync.Pool{
 	New: func() interface{} {
-		return make(Intervals, 0, 10)
+		arr := make(Intervals, 0, 10)
+		return &arr
 	},
 }
 
@@ -35,5 +36,5 @@ func (ivs *Intervals) Dispose() {
 	}
 
 	*ivs = (*ivs)[:0]
-	intervalsPool.Put(*ivs)
+	intervalsPool.Put(ivs)
 }

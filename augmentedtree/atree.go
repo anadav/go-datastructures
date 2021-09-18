@@ -319,19 +319,19 @@ func (tree *tree) Delete(intervals ...Interval) {
 // Query will return a list of intervals that intersect the provided
 // interval.  The provided interval's ID method is ignored so the
 // provided ID is irrelevant.
-func (tree *tree) Query(interval Interval) Intervals {
+func (tree *tree) Query(interval Interval) *Intervals {
 	if tree.root == nil {
 		return nil
 	}
 
 	var (
-		Intervals = intervalsPool.Get().(Intervals)
+		Intervals = intervalsPool.Get().(*Intervals)
 		ivLow     = interval.LowAtDimension(1)
 		ivHigh    = interval.HighAtDimension(1)
 	)
 
 	tree.root.query(ivLow, ivHigh, interval, tree.maxDimension, func(node *node) {
-		Intervals = append(Intervals, node.interval)
+		*Intervals = append(*Intervals, node.interval)
 	})
 
 	return Intervals

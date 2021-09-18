@@ -59,14 +59,14 @@ func TestRootAddMultipleDimensions(t *testing.T) {
 			0, &dimension{0, 10}, &dimension{0, 10},
 		),
 	)
-	assert.Equal(t, Intervals{iv}, result)
+	assert.Equal(t, Intervals{iv}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{100, 200}, &dimension{100, 200},
 		),
 	)
-	assert.Len(t, result, 0)
+	assert.Len(t, *result, 0)
 }
 
 func TestMultipleAddMultipleDimensions(t *testing.T) {
@@ -79,35 +79,35 @@ func TestMultipleAddMultipleDimensions(t *testing.T) {
 			0, &dimension{0, 100}, &dimension{0, 100},
 		),
 	)
-	assert.Equal(t, Intervals{iv2, iv1, iv3}, result)
+	assert.Equal(t, Intervals{iv2, iv1, iv3}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{3, 5}, &dimension{3, 5},
 		),
 	)
-	assert.Equal(t, Intervals{iv2}, result)
+	assert.Equal(t, Intervals{iv2}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{5, 8}, &dimension{5, 8},
 		),
 	)
-	assert.Equal(t, Intervals{iv1, iv3}, result)
+	assert.Equal(t, Intervals{iv1, iv3}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{11, 15}, &dimension{11, 15},
 		),
 	)
-	assert.Equal(t, Intervals{iv3}, result)
+	assert.Equal(t, Intervals{iv3}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{15, 20}, &dimension{15, 20},
 		),
 	)
-	assert.Len(t, result, 0)
+	assert.Len(t, *result, 0)
 }
 
 func TestAddRebalanceInOrderMultiDimensions(t *testing.T) {
@@ -126,7 +126,7 @@ func TestAddRebalanceInOrderMultiDimensions(t *testing.T) {
 			0, &dimension{0, 10}, &dimension{0, 10},
 		),
 	)
-	assert.Len(t, result, 10)
+	assert.Len(t, *result, 10)
 	assert.Equal(t, uint64(10), it.Len())
 }
 
@@ -146,7 +146,7 @@ func TestAddRebalanceReverseOrderMultiDimensions(t *testing.T) {
 			0, &dimension{0, 10}, &dimension{0, 10},
 		),
 	)
-	assert.Len(t, result, 10)
+	assert.Len(t, *result, 10)
 	assert.Equal(t, uint64(10), it.Len())
 }
 
@@ -168,7 +168,7 @@ func TestAddRebalanceRandomOrderMultiDimensions(t *testing.T) {
 			0, &dimension{0, 10}, &dimension{0, 10},
 		),
 	)
-	assert.Len(t, result, 5)
+	assert.Len(t, *result, 5)
 	assert.Equal(t, uint64(5), it.Len())
 }
 
@@ -189,7 +189,7 @@ func TestAddLargeNumbersMultiDimensions(t *testing.T) {
 			0, &dimension{0, numItems}, &dimension{0, numItems},
 		),
 	)
-	assert.Len(t, result, int(numItems))
+	assert.Len(t, *result, int(numItems))
 	assert.Equal(t, uint64(numItems), it.Len())
 }
 
@@ -251,7 +251,9 @@ func TestRootDeleteMultiDimensions(t *testing.T) {
 			0, &dimension{0, 100}, &dimension{0, 100},
 		),
 	)
-	assert.Len(t, result, 0)
+	if result != nil {
+		assert.Len(t, *result, 0)
+	}
 	assert.Equal(t, uint64(0), it.Len())
 }
 
@@ -267,35 +269,35 @@ func TestDeleteMultiDimensions(t *testing.T) {
 			0, &dimension{0, 100}, &dimension{0, 100},
 		),
 	)
-	assert.Equal(t, Intervals{iv2, iv3}, result)
+	assert.Equal(t, Intervals{iv2, iv3}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{3, 5}, &dimension{3, 5},
 		),
 	)
-	assert.Equal(t, Intervals{iv2}, result)
+	assert.Equal(t, Intervals{iv2}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{5, 8}, &dimension{5, 8},
 		),
 	)
-	assert.Equal(t, Intervals{iv3}, result)
+	assert.Equal(t, Intervals{iv3}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{11, 15}, &dimension{11, 15},
 		),
 	)
-	assert.Equal(t, Intervals{iv3}, result)
+	assert.Equal(t, Intervals{iv3}, *result)
 
 	result = it.Query(
 		constructMultiDimensionInterval(
 			0, &dimension{15, 20}, &dimension{15, 20},
 		),
 	)
-	assert.Len(t, result, 0)
+	assert.Len(t, *result, 0)
 }
 
 func TestDeleteRebalanceInOrderMultiDimensions(t *testing.T) {
@@ -321,7 +323,7 @@ func TestDeleteRebalanceInOrderMultiDimensions(t *testing.T) {
 			0, &dimension{0, 10}, &dimension{0, 10},
 		),
 	)
-	assert.Len(t, result, 9)
+	assert.Len(t, *result, 9)
 	assert.Equal(t, uint64(9), it.Len())
 }
 
@@ -348,7 +350,7 @@ func TestDeleteRebalanceReverseOrderMultiDimensions(t *testing.T) {
 			0, &dimension{0, 10}, &dimension{0, 10},
 		),
 	)
-	assert.Len(t, result, 9)
+	assert.Len(t, *result, 9)
 	assert.Equal(t, uint64(9), it.Len())
 }
 
@@ -377,7 +379,7 @@ func TestDeleteRebalanceRandomOrderMultiDimensions(t *testing.T) {
 			0, &dimension{0, 10}, &dimension{0, 10},
 		),
 	)
-	assert.Len(t, result, 4)
+	assert.Len(t, *result, 4)
 	assert.Equal(t, uint64(4), it.Len())
 }
 

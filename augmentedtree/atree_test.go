@@ -216,7 +216,7 @@ func TestAddRebalanceInOrder(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
-	assert.Len(t, result, 10)
+	assert.Len(t, *result, 10)
 	assert.Equal(t, uint64(10), it.Len())
 }
 
@@ -230,7 +230,7 @@ func TestAddRebalanceOutOfOrder(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
-	assert.Len(t, result, 10)
+	assert.Len(t, *result, 10)
 	assert.Equal(t, uint64(10), it.Len())
 }
 
@@ -246,7 +246,7 @@ func TestAddRebalanceRandomOrder(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
-	assert.Len(t, result, 5)
+	assert.Len(t, *result, 5)
 	assert.Equal(t, uint64(5), it.Len())
 }
 
@@ -261,7 +261,7 @@ func TestAddLargeNumberOfItems(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(0, numItems, 0))
-	assert.Len(t, result, int(numItems))
+	assert.Len(t, *result, int(numItems))
 	assert.Equal(t, uint64(numItems), it.Len())
 }
 
@@ -323,7 +323,7 @@ func TestSimpleQuery(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(3, 6, 0))
 
 	expected := Intervals{iv2, iv1}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestRightQuery(t *testing.T) {
@@ -332,7 +332,7 @@ func TestRightQuery(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(6, 8, 0))
 
 	expected := Intervals{iv1, iv3}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestLeftQuery(t *testing.T) {
@@ -341,7 +341,7 @@ func TestLeftQuery(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(3, 5, 0))
 
 	expected := Intervals{iv2}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestMatchingQuery(t *testing.T) {
@@ -350,7 +350,7 @@ func TestMatchingQuery(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(4, 5, 0))
 
 	expected := Intervals{iv2}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestNoMatchLeft(t *testing.T) {
@@ -359,7 +359,7 @@ func TestNoMatchLeft(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(1, 3, 0))
 
 	expected := Intervals{}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestNoMatchRight(t *testing.T) {
@@ -368,7 +368,7 @@ func TestNoMatchRight(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(13, 13, 0))
 
 	expected := Intervals{}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestAllQuery(t *testing.T) {
@@ -377,7 +377,7 @@ func TestAllQuery(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(1, 14, 0))
 
 	expected := Intervals{iv2, iv1, iv3}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestQueryDuplicate(t *testing.T) {
@@ -388,7 +388,7 @@ func TestQueryDuplicate(t *testing.T) {
 	result := it.Query(constructSingleDimensionInterval(4, 5, 0))
 
 	expected := Intervals{iv2, iv4}
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 }
 
 func TestRootDelete(t *testing.T) {
@@ -400,7 +400,9 @@ func TestRootDelete(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(1, 10, 0))
-	assert.Len(t, result, 0)
+	if result != nil {
+		assert.Len(t, result, 0)
+	}
 	assert.Equal(t, uint64(0), it.Len())
 }
 
@@ -413,7 +415,7 @@ func TestDeleteLeft(t *testing.T) {
 
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
 	checkRedBlack(t, it.root, 1)
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 	assert.Equal(t, uint64(2), it.Len())
 }
 
@@ -426,7 +428,7 @@ func TestDeleteRight(t *testing.T) {
 
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
 	checkRedBlack(t, it.root, 1)
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 	assert.Equal(t, uint64(2), it.Len())
 }
 
@@ -439,7 +441,7 @@ func TestDeleteCenter(t *testing.T) {
 
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
 	checkRedBlack(t, it.root, 1)
-	assert.Equal(t, expected, result)
+	assert.Equal(t, expected, *result)
 	assert.Equal(t, uint64(2), it.Len())
 }
 
@@ -460,7 +462,7 @@ func TestDeleteRebalanceInOrder(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
-	assert.Len(t, result, 9)
+	assert.Len(t, *result, 9)
 	assert.Equal(t, uint64(9), it.Len())
 }
 
@@ -480,7 +482,7 @@ func TestDeleteRebalanceOutOfOrder(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
-	assert.Len(t, result, 9)
+	assert.Len(t, *result, 9)
 	assert.Equal(t, uint64(9), it.Len())
 }
 
@@ -502,7 +504,7 @@ func TestDeleteRebalanceRandomOrder(t *testing.T) {
 
 	checkRedBlack(t, it.root, 1)
 	result := it.Query(constructSingleDimensionInterval(0, 10, 0))
-	assert.Len(t, result, 4)
+	assert.Len(t, *result, 4)
 	assert.Equal(t, uint64(4), it.Len())
 }
 
@@ -620,7 +622,7 @@ func TestInsertDuplicateIntervalChildren(t *testing.T) {
 	checkRedBlack(t, tree.root, 1)
 
 	result := tree.Query(constructSingleDimensionInterval(0, 10, 0))
-	assert.Contains(t, result, iv1)
+	assert.Contains(t, *result, iv1)
 }
 
 func TestTraverse(t *testing.T) {

@@ -23,10 +23,10 @@ import (
 )
 
 func TestIntervalsDispose(t *testing.T) {
-	intervals := intervalsPool.Get().(Intervals)
-	intervals = append(intervals, constructSingleDimensionInterval(0, 1, 0))
+	intervals := intervalsPool.Get().(*Intervals)
+	*intervals = append(*intervals, constructSingleDimensionInterval(0, 1, 0))
 
 	intervals.Dispose()
 
-	assert.Len(t, intervals, 0)
+	assert.Len(t, *intervals, 0)
 }

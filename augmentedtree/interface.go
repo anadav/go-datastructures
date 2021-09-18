@@ -68,7 +68,7 @@ type Tree interface {
 	// Query will return a list of intervals that intersect the provided
 	// interval.  The provided interval's ID method is ignored so the
 	// provided ID is irrelevant.
-	Query(interval Interval) Intervals
+	Query(interval Interval) *Intervals
 	// Traverse will traverse tree and give alls intervals
 	// found in an undefined order
 	Traverse(func(Interval))
