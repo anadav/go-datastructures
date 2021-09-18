@@ -31,6 +31,9 @@ type Intervals []Interval
 // Dispose will free any consumed resources and allow this list to be
 // re-allocated.
 func (ivs *Intervals) Dispose() {
+	if ivs == nil {
+		return
+	}
 	for i := 0; i < len(*ivs); i++ {
 		(*ivs)[i] = nil
 	}
